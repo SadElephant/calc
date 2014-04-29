@@ -1,0 +1,32 @@
+.tblCalc{
+		background: linear-gradient(to bottom, #92EC00 0%,#4EDF00 100%);
+ 		border:1px solid #008409;
+ 		margin:0;
+ 		padding:0;
+ 		width:250px;
+ 		text-align:center;
+		
+ 	}
+ 	.tblCalc input{
+ 		background: linear-gradient(to bottom, #0bc408 0%,#09a206 100%);
+		color: #fff;
+		font-size: 16px;
+		text-shadow: 0 1px 0 #757575;
+		padding: 4px 0 5px 0;
+		margin: 4;
+		cursor: pointer;
+		border: 0;
+		border-top: 1px solid #87c286;
+		border-right: 1px solid #0e780c;
+		border-left: 1px solid #0e780c;
+		border-bottom: 1px solid #0e780c;
+		box-shadow: 0 -1px 0 #0e780c, 0 1px 0 #fff;
+		width:30px;
+		border-radius: 2px;
+ 	}
+	 	#btnWide{
+ 		width:80px;
+ 	}
+ 	#editWide{
+ 		width:240px;
+ 	}
