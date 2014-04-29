@@ -1,0 +1,254 @@
+<style type="text/css">
+   	.tblCalc{
+ 		border:1px solid CC33CC;
+ 		margin:30;
+ 		padding:10;
+ 		width:300px;
+ 		text-align:center;
+ 	}
+ 	.tblCalc input{
+ 		border:1px solid CC33CC;
+ 		width:30px;
+ 		margin:4px;
+ 	}
+	 	#btnWide{
+ 		width:90px;
+ 	}
+ 	#editWide{
+ 		width:250px;
+ 	}
+</style>
+<meta charset="utf-8">
+<form name="calc" action="">
+     <table class="tblCalc" cellpadding=0 cellspacing=0>
+     <tr>
+         <td colspan=5 align=middle>
+         	<input id="editWide" name="ReadOut" type="Text"
+              	size=28 value="0" width="250px" readonly>
+         </td>
+     </tr>
+	<tr>
+		<td align=middle>&nbsp;</td>
+	</tr>
+     <tr>
+         <td><input name="btn7" type="Button"
+          	value="7" onclick="Pressed(7)"></td>
+			
+         <td><input name="btn8" type="Button"
+          	value="8" onclick="Pressed(8)"></td>
+			
+         <td><input name="btn9" type="Button"
+          	value="9" onclick="Pressed(9)"></td>
+		<td><input name="btnPlus" type="Button"
+          	value="+" onclick="PressedOperation('+')" /></td>
+         <td><input name="btnClearEntry" type="Button"
+          	value="CE" onclick="ClearEntry()" /></td>
+     <tr>
+         <td><input name="btn4" type="Button"
+          	value="4" onclick="Pressed(4)"></td>
+			
+         <td><input name="btn5" type="Button"
+          	value="5" onclick="Pressed(5)"></td>
+			
+         <td><input name="btn6" type="Button"
+          	value="6" onclick="Pressed(6)"></td>
+			
+		
+			
+         <td><input name="btnMultiply" type="Button"
+          	value="*" onclick="PressedOperation('*')" /></td>
+     </tr>
+     <tr>
+         <td><input name="btn1" type="Button"
+          	value="1" onclick="Pressed(1)"></td>
+			
+         <td><input name="btn2" type="Button"
+          	value="2" onclick="Pressed(2)"></td>
+			
+         <td><input name="btn3" type="Button"
+          	value="3" onclick="Pressed(3)"></td>
+			
+		<td><input name="btnMinus" type="Button"
+          	value="-" onclick="PressedOperation('-')" /></td>
+		
+			
+     </tr>
+     <tr>
+         <td><input name="btnDecimal" type="Button"
+          	value="." onclick="Decimal()"></td>
+		<td><input name="btn0" type="Button"
+          	value="0" onclick="Pressed(0)"></td>
+         <td ><input name="btnEquals"
+          	type="Button" value="=" onclick="Operation('=')"></td>
+         <td align=middle><input name="btnDivide" type="Button"
+          	value=" / " onclick="PressedOperation('/')" /></td>
+     </tr>
+     </table>
+</form>
+<script >
+
+var Fcalc = document.calc;
+var FlagNewNum = false;//показывает вводится ли новое выражение
+var PendingOp = "";
+var FlagOperation=true;//Два флага, для корректной расстановки точек
+var FlagNum=true;
+alert("Введите выражение в формате \" число +, -, *, / число +, -, *, / ...\"");
+
+// обработчик нажатия 
+
+function Pressed (Num) 
+{		
+		FlagNum=true;
+		if (FlagNewNum) 
+		{
+			//вводится следующий операнд 
+			Fcalc.ReadOut.value = Num;
+			FlagNewNum = false;
+		}	
+		else 
+		{
+			if (Fcalc.ReadOut.value == "0")
+			{
+				//вводится первый операнд
+				Fcalc.ReadOut.value = Num;
+			}
+			else
+				//
+				Fcalc.ReadOut.value += Num;
+		}
+		
+}
+
+function PressedOperation (Oper)
+{	
+	Fcalc.ReadOut.value += Oper;
+	FlagOperation=true;
+	FlagNum=false;
+	FlagNewNum = false;
+} 
+	
+// обработчик нажатия
+// кнопки действия
+function Operation (Op) 
+{
+		var Readout = Fcalc.ReadOut.value;
+		//Шаблон для проверки корректности ввода:
+		var matchPatternp = /([0-9]|([0-9][.]))(\s*([\+]|[\-]|[\*]|[\/])\s*([0-9]))+/
+		 //задаем шаблоны для выделения аргументов
+        var splitPlus = /\s*[\+]\s*/
+        var splitMinus = /\s*[\-]\s*/
+        var splitMulti = /\s*[\*]\s*/
+        var splitDivide = /\s*[\/]\s*/
+		var result = 0;
+		var arr1=[];
+		var arr2 =[];
+		var arr3,arr4;
+		var quotient = 1;//частное
+		var mult=1;//Произведение
+		var residual=0;//разность
+		if (!/[0-9]/.test(Readout.charAt(0)))
+		{
+			Readout="0"+Readout;
+		}
+		
+		if (matchPatternp.test(Readout))//проверяе корректность ввода
+		{
+			//выделяем слагаемые
+			arr1=Readout.split(splitPlus);
+			for (i = 0; i < arr1.length; i++)
+            {
+				//Разбиваем сложные аргументы, используя знак "-"
+				arr2=arr1[i].split(splitMinus);
+				if (arr2.length != 0)
+                { 
+                    for (j = 0; j < arr2.length; j++)
+                    {   //Разбиваем сложные аргументы, используя знак "*"
+						arr3=arr2[j].split(splitMulti);
+						for (k = 0; k < arr3.length; k++)
+						{   //Разбиваем сложные аргументы, используя знак "/"
+							arr4=arr3[k].split(splitDivide);
+							quotient=parseFloat(arr4[0]);
+							for (l = 1; l < arr4.length; l++)
+							{
+								if (parseFloat(arr4[l]) != 0)
+								{
+									quotient = quotient / parseFloat(arr4[l]);
+								}
+								else
+								{
+											quotient = NaN;
+								}
+							}
+							arr4=[];
+							arr3[k] = quotient;//Записывам число на песто выражения
+							quotient = 1;
+							mult = mult * parseFloat(arr3[k]);
+						}
+						arr3=[];
+						arr2[j] = mult;//Записывам число на песто выражения
+						mult = 1;
+					}
+					residual = parseFloat(arr2[0]);
+                    for (j = 1; j < arr2.length; j++)
+                    {
+                        residual = residual - parseFloat(arr2[j]);
+                    }
+					
+                    arr1[i] = residual;//Записывам число на песто выражения
+                    residual = 0;
+				}
+				arr2=[];
+				//alert(parseFloat(arr1[i]));
+				result = result + parseFloat(arr1[i]);
+				
+			}
+			if((result != NaN) && (result != Infinity))
+			{
+				Fcalc.ReadOut.value=result;
+			}
+			else
+			{
+				alert("Ошибка вычисления");
+				Fcalc.ReadOut.value="0";
+			}
+		}
+		else
+		{
+			alert("Ошибка ввода");
+			Fcalc.ReadOut.value="0";
+		}
+		
+		FlagNewNum = true;
+}
+	
+// добавление десятичной точки с числу
+function Decimal () 
+{
+		var curReadOut = Fcalc.ReadOut.value;
+		if(FlagOperation && FlagNum)
+		{
+			if (FlagNewNum) 
+			{
+				curReadOut = "0.";
+				FlagNewNum = false;
+			}
+			else
+			{
+				//if (curReadOut.indexOf(".") == -1)
+					curReadOut += ".";
+			}
+			FlagOperation=false;
+			FlagNum=false
+		}
+		Fcalc.ReadOut.value = curReadOut;
+}
+	
+// Очистка результата
+function ClearEntry () 
+{
+		Fcalc.ReadOut.value = "0";
+		FlagNewNum = true;
+}
+
+
+</script>
