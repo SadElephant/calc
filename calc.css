@@ -1,5 +1,10 @@
 .tblCalc{
 		background: linear-gradient(to bottom, #92EC00 0%,#4EDF00 100%);
+		background: -moz-linear-gradient(bottom, #92EC00 0%,#4EDF00 100%);
+		 background: -webkit-linear-gradient(bottom, #92EC00 0%,#4EDF00 100%);
+		background: -o-linear-gradient(bottom, #92EC00 0%,#4EDF00 100%);
+		background: -ms-linear-gradient(bottom, #92EC00 0%,#4EDF00 100%);
+		
  		border:1px solid #008409;
  		margin:0;
  		padding:0;
