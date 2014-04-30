@@ -4,7 +4,7 @@
 		 background: -webkit-linear-gradient(bottom, #92EC00 0%,#4EDF00 100%);
 		background: -o-linear-gradient(bottom, #92EC00 0%,#4EDF00 100%);
 		background: -ms-linear-gradient(bottom, #92EC00 0%,#4EDF00 100%);
-		
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF92EC00', endColorstr='#FF4EDF00');
  		border:1px solid #008409;
  		margin:0;
  		padding:0;
@@ -14,6 +14,11 @@
  	}
  	.tblCalc input{
  		background: linear-gradient(to bottom, #0bc408 0%,#09a206 100%);
+		background: -moz-linear-gradien(tbottom, #0bc408 0%,#09a206 100%);
+		 background: -webkit-linear-gradient(bottom, #0bc408 0%,#09a206 100%);
+		background: -o-linear-gradient(bottom, #0bc408 0%,#09a206 100%);
+		background: -ms-linear-gradient(bottom, #0bc408 0%,#09a206 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0bc408', endColorstr='#FF09a206')
 		color: #fff;
 		font-size: 16px;
 		text-shadow: 0 1px 0 #757575;
