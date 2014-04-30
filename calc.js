@@ -1,126 +1,121 @@
 var Fcalc = document.calc;
 var Currents = 0;
-var FlagNewNum = false;
+var flagNewNum = false;
 var PendingOp = "";
+
 
 // обработчик нажатия 
 // цифровой кнопки
-function NumPressed (Num){
-		if (FlagNewNum){
-			Fcalc.ReadOut.value = Num;
-			FlagNewNum = false;
-		}else{
-			if ((Fcalc.ReadOut.value == "0") || (Fcalc.ReadOut.value =='Ошибка вычислений'))
-				Fcalc.ReadOut.value = Num;
-			else
-				Fcalc.ReadOut.value += Num;
-		}
-}
+function numPressed (num, th){
+  if (th != null) th.blur();
+  if (flagNewNum){
+	Fcalc.ReadOut.value = num;
+	flagNewNum = false;
+  } else {
+	if ((Fcalc.ReadOut.value == "0") || (Fcalc.ReadOut.value =='Ошибка вычислений')) {
+	  Fcalc.ReadOut.value = num;
+	} else {
+	  Fcalc.ReadOut.value += num;
+	}
+  }
+ }
 	
 // обработчик нажатия
 // кнопки действия
-function Operation (Op){
-	var Readout = Fcalc.ReadOut.value;
-
-	if( Readout =='Ошибка вычислений'){
-		Readout = 0;
-		Fcalc.ReadOut.value = 0;
+function operation (Op, th) {
+  var readout = Fcalc.ReadOut.value;
+  
+  if (th != null) th.blur();
+  if (readout =='Ошибка вычислений') {
+	readout = 0;
+	Fcalc.ReadOut.value = 0;
+  }
+	
+  if (flagNewNum && PendingOp != "=") {
+	Fcalc.ReadOut.value = Currents + PendingOp;
+  } else {
+	flagNewNum = true;
+	if ('+' == PendingOp ) {
+	  Currents += parseFloat(readout);
+	  Fcalc.ReadOut.value += PendingOp;
+	} else if ('-' == PendingOp){
+	  Fcalc.ReadOut.value += PendingOp;
+	  Currents -= parseFloat(readout);
+	} else if ('/' == PendingOp){
+	  Currents /= parseFloat(readout);
+	  Fcalc.ReadOut.value += PendingOp;
+	} else if ('*' == PendingOp ){
+	  Currents *= parseFloat(readout);
+	  Fcalc.ReadOut.value += PendingOp;
+	} else {
+	  Currents = parseFloat(readout);
 	}
 	
-	if (FlagNewNum && PendingOp != "="){
-		Fcalc.ReadOut.value = Currents+PendingOp;
-	}else{
-		FlagNewNum = true;
-		if ( '+' == PendingOp ){
-		Currents += parseFloat(Readout);
-		Fcalc.ReadOut.value+=PendingOp;
-		}else if ( '-' == PendingOp ){
-			Fcalc.ReadOut.value+=PendingOp;
-			Currents -= parseFloat(Readout);
-		}else if ( '/' == PendingOp ){
-			Currents /= parseFloat(Readout);
-			Fcalc.ReadOut.value+=PendingOp;
-		}else if ( '*' == PendingOp ){
-			Currents *= parseFloat(Readout);
-			Fcalc.ReadOut.value+=PendingOp;
-		}else
-			Currents = parseFloat(Readout);
-		if (Op != "=") Fcalc.ReadOut.value = Currents + Op;
-		else Fcalc.ReadOut.value = Currents;
-		PendingOp = Op;
+	if (Op != "="){ 
+		Fcalc.ReadOut.value = Currents + Op;
+	} else {
+		Fcalc.ReadOut.value = Currents;
 	}
+	PendingOp = Op;
+  }
 	
 	//исключение NaN и Infinity
-	if((isNaN(Currents))||(Currents==Infinity)) {
-	Currents=0;
-	Fcalc.ReadOut.value ='Ошибка вычислений';
-	return;		
-	}
-	
-	
+  if ((isNaN( Currents)) || (Currents == Infinity)) {
+  Currents = 0;
+  Fcalc.ReadOut.value ='Ошибка вычислений';
+  return;		
+  }	
 }
 // добавление десятичной точки с числу
-function Decimal (){
-	var curReadOut = Fcalc.ReadOut.value;
-	if (FlagNewNum) {
-		curReadOut = "0.";
-		FlagNewNum = false;
-	}else{
-		if (curReadOut.indexOf(".") == -1)
-				curReadOut += ".";
-		}
-	Fcalc.ReadOut.value = curReadOut;
+function Decimal(th) {
+  var curReadOut = Fcalc.ReadOut.value;
+	
+  if (th!=null) th.blur();
+  if (flagNewNum) {
+	curReadOut = "0.";
+	flagNewNum = false;
+  } else {
+	if (curReadOut.indexOf(".") == -1)
+	  curReadOut += ".";
+  }
+  Fcalc.ReadOut.value = curReadOut;
 }
 	
-// Очистка текущего результата
-function ClearEntry (){
-	if(PendingOp != ""){
-		Fcalc.ReadOut.value = Currents;
-		PendingOp = "";
-		FlagNewNum = false;
-		return;
-	}
-	Fcalc.ReadOut.value = "0";
-	FlagNewNum = true;
-}
 	
 // Полная очистка всех результатов
-function Clear () {
-	Currents = 0;
-	PendingOp = "";
-	Fcalc.ReadOut.value = "0";
-	FlagNewNum = false;
+function Clear (th) {
+  if (th != null) th.blur();
+  Currents = 0;
+  PendingOp = "";
+  Fcalc.ReadOut.value = "0";
+  flagNewNum = false;
 }
 
 
 //обработчик нажатия клавиши клавиатуры
-document.onkeypress = function pressed(event){
-	event = event || window.event;
-	//обработка цифр
-	var key = event.keyCode;
-	if ( event.keyCode == 0) key = event.which;
-	
-	if ((key >= 48) && (key <= 57)){
-		NumPressed( String.fromCharCode(key));
-		return true;
-	}
-	
+document.onkeypress = function pressed(event) {
+  event = event || window.event;
+  var key = event.keyCode;
+  if ( event.keyCode == 0) key = event.which;
+		
+  if ((key >= 48) && (key <= 57)) { //обработка цифр
+	numPressed( String.fromCharCode(key), null);
+	return true;
+  }
 	//обработка знаков операций
-	if ((key==42) || (key==43) || (key==45) || (key==47) || (key==61)){
-		Operation( String.fromCharCode(key));
-		return true;
-	}
+  if ((key == 42) || (key == 43) || (key == 45) || (key == 47) || (key == 61)) {
+	operation( String.fromCharCode(key), null);
+	return true;
+  }
 	
-	//обработка точки
-	if(key==46){
-		Decimal();
+  if (key == 46) {//обработка точки
+	Decimal(null);
+	return true;
+  }
+
+  if (key == 13) {//обработка нажатия клавиши ENTER
+		operation('=', null);
 		return true;
-	}
-	
-	//обработка нажатия клавиши ENTER
-	if (key==13){
-		Operation('=');
-		return true;
-	}
-	return false;
+  }
+  return false;
 }

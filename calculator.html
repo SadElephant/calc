@@ -9,9 +9,8 @@
      <tr>
          <td colspan=5 align=middle>
          	<input id="editWide" name="ReadOut" type="Text"
-				disabled
-              	size=28 value="0"  size ="25" maxlength="25"	
-				readonly>
+				disabled size=28 value="0"  size ="25" 
+				maxlength="25"	readonly>
          </td>
      </tr>
 	<tr>
@@ -19,52 +18,49 @@
 	</tr>
      <tr>
          <td><input name="btn7" type="Button"
-          	value="7" onclick="NumPressed(7)"></td>
-			
+          	value="7" onclick="numPressed(7,this)"></td>
          <td><input name="btn8" type="Button"
-          	value="8" onclick="NumPressed(8)"></td>
-			
+          	value="8" onclick="numPressed(8,this)"></td>
          <td><input name="btn9" type="Button"
-          	value="9" onclick="NumPressed(9)"></td>
+          	value="9" onclick="numPressed(9,this)"></td>
 		<td><input name="btnPlus" type="Button"
-          	value="+" onclick="Operation('+')" /></td>
-         <td><input name="btnClearEntry" type="Button"
-          	value="CE" onclick="ClearEntry()" /></td>
+          	value="+" onclick="operation('+',this)" /></td>
+        <td><input name="btnClear" type="Button"
+          	value="C" onclick="Clear(this)" /></td>
      <tr>
          <td><input name="btn4" type="Button"
-          	value="4" onclick="NumPressed(4)"></td>
+          	value="4" onclick="numPressed(4,this)"></td>
          <td><input name="btn5" type="Button"
-          	value="5" onclick="NumPressed(5)"></td>
+          	value="5" onclick="numPressed(5,this)"></td>
          <td><input name="btn6" type="Button"
-          	value="6" onclick="NumPressed(6)"></td>
+          	value="6" onclick="numPressed(6,this)"></td>
 		<td><input name="btnMultiply" type="Button"
-          	value="*" onclick="Operation('*')" /></td>
-		<td><input name="btnClear" type="Button"
-          	value="C" onclick="Clear()" /></td>
+          	value="*" onclick="operation('*',this)" /></td>
+		
         
      </tr>
      <tr>
          <td><input name="btn1" type="Button"
-          	value="1" onclick="NumPressed(1)"></td>
+          	value="1" onclick="numPressed(1,this)"></td>
 			
          <td><input name="btn2" type="Button"
-          	value="2" onclick="NumPressed(2)"></td>
+          	value="2" onclick="numPressed(2,this)"></td>
 			
          <td><input name="btn3" type="Button"
-          	value="3" onclick="NumPressed(3)"></td>
+          	value="3" onclick="numPressed(3,this)"></td>
 			
 		<td><input name="btnMinus" type="Button"
-          	value="-" onclick="Operation('-')" /></td>
+          	value="-" onclick="operation('-',this)" /></td>
      </tr>
      <tr>
          <td><input name="btnDecimal" type="Button"
-          	value="." onclick="Decimal()"></td>
+          	value="." onclick="Decimal(this)"></td>
 		<td><input name="btn0" type="Button"
-          	value="0" onclick="NumPressed(0)"></td>
+          	value="0" onclick="numPressed(0,this)"></td>
          <td ><input name="btnEquals"
-          	type="Button" value="=" onclick="Operation('=')"></td>
+          	type="Button" value="=" onclick="operation('=',this)"></td>
          <td align=middle><input name="btnDivide" type="Button"
-          	value=" / " onclick="Operation('/')" /></td>
+          	value=" / " onclick="operation('/',this)" /></td>
      </tr>
      </table>
 </form>
