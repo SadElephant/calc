@@ -74,6 +74,12 @@ function Decimal (){
 	
 // Очистка текущего результата
 function ClearEntry (){
+	if(PendingOp != ""){
+		Fcalc.ReadOut.value = Currents;
+		PendingOp = "";
+		FlagNewNum = false;
+		return;
+	}
 	Fcalc.ReadOut.value = "0";
 	FlagNewNum = true;
 }
@@ -82,38 +88,37 @@ function ClearEntry (){
 function Clear () {
 	Currents = 0;
 	PendingOp = "";
-	ClearEntry();
+	Fcalc.ReadOut.value = "0";
+	FlagNewNum = false;
 }
 
-
-// меняем знак текущего результата
-function Neg (){
-	Fcalc.ReadOut.value = 
-	parseFloat(Fcalc.ReadOut.value) * -1;
-}
 
 //обработчик нажатия клавиши клавиатуры
 document.onkeypress = function pressed(event){
+	event = event || window.event;
 	//обработка цифр
-	if ((event.keyCode >= 48)&&(event.keyCode <= 57)){
-		NumPressed( String.fromCharCode( event.keyCode));
+	var key = event.keyCode;
+	if ( event.keyCode == 0) key = event.which;
+	
+	if ((key >= 48) && (key <= 57)){
+		NumPressed( String.fromCharCode(key));
 		return true;
 	}
 	
 	//обработка знаков операций
-	if ((event.keyCode==42)||(event.keyCode==43)||(event.keyCode==45)||(event.keyCode==47)){
-		Operation( String.fromCharCode( event.keyCode));
+	if ((key==42) || (key==43) || (key==45) || (key==47) || (key==61)){
+		Operation( String.fromCharCode(key));
 		return true;
 	}
 	
 	//обработка точки
-	if(event.keyCode==46){
+	if(key==46){
 		Decimal();
 		return true;
 	}
 	
 	//обработка нажатия клавиши ENTER
-	if (event.keyCode==13){
+	if (key==13){
 		Operation('=');
 		return true;
 	}

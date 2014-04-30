@@ -18,14 +18,14 @@
 		 background: -webkit-linear-gradient(bottom, #0bc408 0%,#09a206 100%);
 		background: -o-linear-gradient(bottom, #0bc408 0%,#09a206 100%);
 		background: -ms-linear-gradient(bottom, #0bc408 0%,#09a206 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0bc408', endColorstr='#FF09a206')
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0bc408', endColorstr='#FF09a206');
 		color: #fff;
 		font-size: 16px;
 		text-shadow: 0 1px 0 #757575;
 		padding: 4px 0 5px 0;
 		margin: 4;
 		cursor: pointer;
-		border: 0;
+		border: 1px solid #0e780c;
 		border-top: 1px solid #87c286;
 		border-right: 1px solid #0e780c;
 		border-left: 1px solid #0e780c;
