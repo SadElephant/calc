@@ -15,7 +15,7 @@ function numPressed (num, th){
   //чтобы она не нажималась при нажатии ENTER
   if (th != null) th.blur(); 
   
-  if (flagNewNum) {
+  if (flagNewNum){
 	Fcalc.ReadOut.value = num;
 	flagNewNum = false;
   } else if ((Fcalc.ReadOut.value == "0") || (Fcalc.ReadOut.value =='Ошибка'+
@@ -74,9 +74,9 @@ function operation (Op, th) {
   }
 	
 	//исключение NaN и Infinity
-  if ((isNaN(Currents)) || (Currents == Infinity)) {
+  if ((isNaN( Currents)) || (Currents == Infinity)) {
   Currents = 0;
-  Fcalc.ReadOut.value = 'Ошибка вычислений';
+  Fcalc.ReadOut.value ='Ошибка вычислений';
   return;		
   }	
 }
@@ -84,7 +84,7 @@ function operation (Op, th) {
 function Decimal(th) {
   var curReadOut = Fcalc.ReadOut.value;
   
-  if ( overflow()) return;
+  if (overflow()) return;
   if (th != null) th.blur();
   
   if (flagNewNum) {
@@ -129,6 +129,7 @@ document.onkeypress = function pressed(event) {
     case 61:
 	  operation( String.fromCharCode(key), null);
 	  return true;
+	case 44:
     case 46: //обработка точки
 	  Decimal(null);
 	  return true;
